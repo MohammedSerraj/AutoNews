@@ -66,10 +66,10 @@ class NewsProcessor:
     
     @staticmethod
     def _get_images_dir() -> str:
-        """Get or create images directory in backend/api/static"""
+        """Get or create images directory in backend/public/static"""
         # Go up from scraper_service to AutoNews root, then into backend
         root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        img_dir = os.path.join(root, "backend", "api", "static", "articles_images")
+        img_dir = os.path.join(root, "backend", "public", "static", "articles_images")
         os.makedirs(img_dir, exist_ok=True)
         return img_dir
     
