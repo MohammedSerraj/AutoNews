@@ -1,91 +1,49 @@
 # AutoNews
 
-AutoNews is a full-stack news scraping and publishing project. It includes:
+AutoNews is a small full-stack project that scrapes news, stores articles in a Laravel backend, and presents them in a React frontend (TangierTimes UI).
 
-- A Laravel backend API that stores and serves articles.
-- A React (Vite) frontend (TangierTimes) that consumes the API and presents a NYT-like reading experience with bookmarks.
-- A Python-based scraper service that fetches articles from source sites, translates and categorizes them using AI, downloads images, and inserts them into the database.
+This repository contains three main workspaces:
 
-This repository is organized into three top-level folders:
+- `backend/` — Laravel API and public assets
+- `frontend/` — React (Vite) app used to browse articles
+- `scraper_service/` — Python scraper and AI-processing scripts that ingest content into the database
 
-- `backend/` — Laravel application and API.
-- `frontend/` — React + Vite frontend (TangierTimes UI).
-- `scraper_service/` — Python scripts that crawl, process, and insert articles.
+This README gives quick setup steps, where to look for the important files, and how to run the project locally.
 
 ---
 
-## Quick links
+## Quick URLs (local dev)
 
-- Backend API: `http://127.0.0.1:8000/api/articles`
-- Article images served from: `http://127.0.0.1:8000/static/articles_images/<filename>`
-
-> Note: Replace host/ports with production addresses when deploying.
+- API (list articles): `http://127.0.0.1:8000/api/articles`
+- Sample article image URL pattern: `http://127.0.0.1:8000/static/articles_images/<filename>`
 
 ---
 
-## Architecture (overview)
+## What each part does
 
-- Scraper fetches raw articles and images from target websites.
-- Scraper translates and categorizes text using an AI service, saves images under `backend/public/static/articles_images`, and inserts records into the MySQL database used by the Laravel backend.
-- Laravel exposes a simple REST API (`/api/articles`) used by the frontend to list and show articles.
-- Frontend fetches articles, displays them, enables searching, bookmarking (localStorage), and routes to article detail pages.
-
----
-
-## Prerequisites
-
-- Docker (optional) or native installs of:
-  - PHP 8.x with required extensions (PDO, mbstring, tokenizer, etc.)
-  - Composer
-  - MySQL / MariaDB
-  - Node.js (16+) and npm
-  - Python 3.10+ and pip
+- Backend: stores articles and serves them via a minimal REST API. Images are served from `backend/public/static/articles_images/`.
+- Frontend: fetches the API and renders a news website UI with search and bookmarks (bookmarks saved to browser localStorage).
+- Scraper: crawls configured sources, extracts text and images, runs translation/categorization (AI), downloads images into the backend images folder, and inserts records into the database.
 
 ---
 
-## Backend (Laravel)
+## Getting started (summary)
 
-Location: `backend/`
+Prerequisites: PHP 8.x, Composer, MySQL, Node.js (16+), Python 3.10+.
 
-What it provides:
-- REST API for articles (`index` and `show`) implemented in `app/Http/Controllers/ArticleController.php`.
-- Model: `app/Models/Article.php`.
-- Public assets (images) are served from `backend/public/static/articles_images/`.
-
-Environment:
-- Copy and edit `.env.example` (or use `backend/.env`) and set the database credentials and app URL.
-
-Install & run (local dev):
+1) Backend (Laravel)
 
 ```bash
 cd backend
 composer install
 cp .env.example .env
-# update .env with DB credentials
+# edit .env to point to your DB and set APP_URL
 php artisan key:generate
 php artisan migrate
 php artisan serve --host=127.0.0.1 --port=8000
 ```
 
-API endpoints
-- GET /api/articles — list articles (returns JSON { success, data, message })
-- GET /api/articles/{id} — fetch single article
-
-Notes
-- Images are stored under `backend/public/static/articles_images`. The scraper writes files into that folder (or into `public/static/articles_images/` depending on your environment). Ensure the webserver serves the `public/` directory.
-- If `php artisan route:list` fails, ensure PHP and required extensions are installed and `.env` has correct settings.
-
----
-
-## Frontend (React + Vite)
-
-Location: `frontend/`
-
-What it provides:
-- A TangierTimes-style UI using React, Vite and Bootstrap.
-- Pages/components: `Home`, `ArticleDetail`, `ArticleCard`, `BookmarkContext` (localStorage-based bookmarks).
-
-Install & run:
+2) Frontend (Vite + React)
 
 ```bash
 cd frontend
@@ -93,103 +51,72 @@ npm install
 npm run dev
 ```
 
-Notes
-- The frontend expects the backend API at `http://127.0.0.1:8000/api/articles` and images at `http://127.0.0.1:8000/static/articles_images/<filename>`.
-- If images show as broken, verify that files exist under `backend/public/static/articles_images` and that the backend dev server or web server is accessible from the browser.
-- When navigating directly to an article page, the frontend will fetch the article by ID from the API (so deep links work).
-
----
-
-## Scraper Service (Python)
-
-Location: `scraper_service/`
-
-What it does:
-- Scrapes news pages (sitemaps or seed URLs), extracts title/date/content/images.
-- Uses AI (translator, categorizer modules) to translate/categorize content.
-- Downloads/validates images and saves them into the backend public images folder.
-- Inserts translated/categorized articles into the database.
-
-Requirements & install
+3) Scraper (optional)
 
 ```bash
 cd scraper_service
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-# create a .env (or use .env.example) with DB and AI keys
-```
-
-Run (example)
-
-```bash
+# copy .env.example -> .env and fill DB / AI keys
 python src/main.py
 ```
 
-Important:
-- Configure database credentials in `scraper_service/.env` (or `scraper_service/.env.example`).
-- The scraper will write images into `../backend/public/static/articles_images` by default (relative path) — confirm permissions.
+Notes
+- The scraper writes images into the backend public folder by default — ensure the path/permissions are correct.
+- If the frontend or images appear broken, confirm the backend is running and that the image filenames stored in the DB match the files in `backend/public/static/articles_images/`.
 
 ---
 
-## Environment variables
+## API
 
-- Backend: `backend/.env` — database, APP_URL, etc.
-- Scraper: `scraper_service/.env.example` — contains DB_HOST, DB_USER, DB_PASS, AI keys and other options. Copy to `.env` and edit.
-- Frontend: `frontend/.env` — optional, used for overriding API base URL if needed.
-
-Do NOT commit secrets. Use `.env.example` files as templates.
+- `GET /api/articles` — returns an array of articles with fields such as `id`, `title_en`, `content_en`, `date`, `category`, `image_url`, `source_url`.
+- `GET /api/articles/{id}` — returns a single article.
 
 ---
 
-## Common troubleshooting
+## Screenshots
 
-- Images not loading in frontend:
-  - Confirm images exist: `ls backend/public/static/articles_images/`
-  - Ensure backend is serving `public/` directory (if using `php artisan serve` it will).
-  - Confirm image URL used by frontend matches the served URL (the project uses `http://127.0.0.1:8000/static/articles_images/<file>`).
+Below are screenshots from the current frontend (committed in `docs/screenshots/`).
 
-- `php artisan route:list` or artisan commands failing:
-  - Install PHP and required extensions; set correct permissions; ensure `.env` exists and `APP_KEY` set.
+### Home
+![Home page](docs/screenshots/Home.png)
 
-- Frontend dev server errors or missing packages:
-  - Run `npm install` in `frontend/` and retry `npm run dev`.
+### Article detail
+![Article detail](docs/screenshots/article-detail.png)
 
-- Scraper database inserts failing:
-  - Check `scraper_service/.env` for correct DB credentials and that the database user has INSERT privileges.
-  - Check file permissions for the images folder so the scraper can write files.
+These images are stored in `docs/screenshots/`. To add more screenshots, copy files into that folder and commit them.
 
 ---
 
-## Tests
+## Troubleshooting
 
-- Backend: Laravel tests under `backend/tests/` — run with `php artisan test` or `vendor/bin/phpunit`.
-- Frontend: No automated tests currently included; consider adding React Testing Library / Jest for components.
+- Images not visible:
+  - Confirm the backend is running (`php artisan serve`) and serving `public/`.
+  - Check that the file names in the DB match `backend/public/static/articles_images/`.
+  - Open an image URL directly in the browser to confirm it serves: `http://127.0.0.1:8000/static/articles_images/<file>`.
 
----
+- `php artisan` errors:
+  - Make sure PHP and required extensions are installed and `backend/.env` is configured correctly.
 
-## Contributing
-
-1. Create an issue describing the change or bug.
-2. Create a feature branch named `feature/your-short-description`.
-3. Make changes, run tests, and open a PR.
-
-Please avoid committing secrets or large binaries. Keep large article images out of git; they belong in `backend/public/static/articles_images` and are ignored by `.gitignore`.
+- Frontend dev errors:
+  - Run `npm install` inside `frontend/` and retry `npm run dev`.
 
 ---
 
-## License
+## Contributing and development notes
 
-This project is released under the MIT License. See `LICENSE` for details (if present) or add one to the repo.
+- Follow a branch-per-feature workflow: `feature/your-feature` → PR → merge to `main`.
+- Avoid checking in `.env` files or large binaries (images should be stored outside of git for production).
+
+If you want, I can:
+- Add deployment instructions (NGINX + PHP-FPM + Node build)
+- Add a small `Makefile` to orchestrate dev startup (backend + frontend)
+- Add automated image optimization for `docs/screenshots/` on commit
 
 ---
 
-If you'd like, I can:
-
-- Add example deployment instructions (NGINX + PHP-FPM, Node build) for production.
-- Create small CONTRIBUTING.md or developer scripts (makefile) to simplify local setup.
-
-Let me know what you want me to add or clarify.
+Thank you — tell me if you'd like any of the follow-up items implemented.
 
 ---
 
