@@ -77,7 +77,7 @@ Notes
 
 ## Screenshots
 
-Below are screenshots from the current frontend (committed in `docs/screenshots/`).
+
 
 ### Home
 ![Home page](docs/screenshots/Home.png)
@@ -85,75 +85,6 @@ Below are screenshots from the current frontend (committed in `docs/screenshots/
 ### Article detail
 ![Article detail](docs/screenshots/article-detail.png)
 
-These images are stored in `docs/screenshots/`. To add more screenshots, copy files into that folder and commit them.
 
----
 
-## Troubleshooting
 
-- Images not visible:
-  - Confirm the backend is running (`php artisan serve`) and serving `public/`.
-  - Check that the file names in the DB match `backend/public/static/articles_images/`.
-  - Open an image URL directly in the browser to confirm it serves: `http://127.0.0.1:8000/static/articles_images/<file>`.
-
-- `php artisan` errors:
-  - Make sure PHP and required extensions are installed and `backend/.env` is configured correctly.
-
-- Frontend dev errors:
-  - Run `npm install` inside `frontend/` and retry `npm run dev`.
-
----
-
-## Contributing and development notes
-
-- Follow a branch-per-feature workflow: `feature/your-feature` → PR → merge to `main`.
-- Avoid checking in `.env` files or large binaries (images should be stored outside of git for production).
-
-If you want, I can:
-- Add deployment instructions (NGINX + PHP-FPM + Node build)
-- Add a small `Makefile` to orchestrate dev startup (backend + frontend)
-- Add automated image optimization for `docs/screenshots/` on commit
-
----
-
-Thank you — tell me if you'd like any of the follow-up items implemented.
-
----
-
-## Screenshots
-
-You can add screenshots of the running site to the repository so they're displayed here. Recommended location: `docs/screenshots/`.
-
-Example filenames (suggested):
-
-- `docs/screenshots/home.png` — homepage
-- `docs/screenshots/article-detail.png` — article detail view
-- `docs/screenshots/bookmarks.png` — bookmarks page
-
-Add images using Git:
-
-```bash
-# create folder if it doesn't exist
-mkdir -p docs/screenshots
-# copy screenshots into the folder
-# stage and commit
-git add docs/screenshots/*
-git commit -m "docs: add screenshots"
-git push origin YOUR_BRANCH
-```
-
-Markdown examples (paste these into this README where you want the images to appear):
-
-```markdown
-### Home
-![Home page](docs/screenshots/home.png)
-
-### Article detail
-![Article detail](docs/screenshots/article-detail.png)
-```
-
-Notes & tips
-
-- Prefer PNG or JPG, keep file sizes reasonable (<= 300KB) for the README to render quickly.
-- If images are large, consider hosting them externally (Imgur, GitHub Releases, or your CDN) and reference the public URL instead.
-- If you want I can add the `docs/screenshots/` folder and a placeholder `.gitkeep` so Git tracks the directory — or you can upload screenshots and I'll add them to the repo for you.
