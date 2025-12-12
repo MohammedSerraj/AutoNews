@@ -51,8 +51,7 @@ npm install
 npm run dev
 ```
 
-3) Scraper (optional)
-
+3) Scraper 
 ```bash
 cd scraper_service
 python -m venv .venv
