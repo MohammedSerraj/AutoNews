@@ -1,6 +1,6 @@
 # AutoNews
 
-AutoNews is a small full-stack project that scrapes news, stores articles in a Laravel backend, and presents them in a React frontend (TangierTimes UI).
+AutoNews is a small full-stack project that scrapes news,translate and categorize them using AI, stores articles in a Laravel backend, and presents them in a React frontend (TangierTimes UI).
 
 This repository contains three main workspaces:
 
