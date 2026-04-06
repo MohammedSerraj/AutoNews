@@ -14,7 +14,7 @@
   }
 
   a {
-    @apply text-nyt-black hover:text-nyt-gray transition-colors;
+    @apply transition-colors;
   }
 }
 
@@ -50,6 +50,6 @@
   }
 
   .card-nyt {
-    @apply bg-white border border-gray-200 hover:shadow-md transition-shadow;
+    @apply bg-white border border-gray-100 hover:shadow-xl hover:border-gray-300 transition-all duration-300;
   }
 }

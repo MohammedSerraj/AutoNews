@@ -4,6 +4,7 @@ import time
 from dotenv import load_dotenv
 from imagekitio import ImageKit
 from apscheduler.schedulers.blocking import BlockingScheduler
+from datetime import datetime
 
 from scraper import get_article_links, scrape_article
 from translator import translate_to_english, detect_category
@@ -115,7 +116,7 @@ if __name__ == "__main__":
     scheduler = BlockingScheduler()
     
     # Add the job to run every 24 hours
-    scheduler.add_job(process_news, 'interval', hours=24, next_run_time=time.time())
+    scheduler.add_job(process_news, 'interval', hours=24, next_run_time=datetime.now())
     
     print("Scheduler started. Running news process every 24 hours...")
     try:

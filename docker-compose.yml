@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: tangiertimes-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-autonews}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_USER: ${DB_USERNAME:-root}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # Laravel API (PHP-FPM)
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: tangiertimes-api
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-autonews}
+      DB_USERNAME: ${DB_USERNAME:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-root}
+      APP_URL: http://localhost:8000
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/var/www
+
+  # Laravel Nginx
+  web:
+    image: nginx:stable-alpine
+    container_name: tangiertimes-web
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www
+      - ./backend/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - api
+
+  # React Frontend (Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: tangiertimes-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+  # Python Scraper
+  scraper:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    container_name: tangiertimes-scraper
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_USER: ${DB_USERNAME:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-root}
+      DB_NAME: ${DB_DATABASE:-autonews}
+    depends_on:
+      - db
+
+volumes:
+  db_data:
