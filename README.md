@@ -2,7 +2,6 @@
   <h1 style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 3.5rem; border: none; margin-bottom: 0;">TangierTimes</h1>
   <p style="font-style: italic; color: #666; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.8rem; font-weight: 600; margin-top: -5px;">Morocco's Premier English Daily </p>
 
-  <img src="https://i.ibb.co/HTpN3pDH/33cdbf5f43d09df0524c32ce26fa23f3.jpg" alt="TangierTimes Cover" width="100%" style="border-radius: 12px; margin: 20px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
 
   <p>
     <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
