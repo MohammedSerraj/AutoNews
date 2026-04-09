@@ -126,7 +126,4 @@ python main.py
 
 ---
 
-<div align="center">
-  <p>Built with ❤️ for Tangier, Morocco.</p>
-  <p><b>© 2026 TangierTimes Team</b></p>
-</div>
+
