@@ -17,9 +17,11 @@
 
 ## Video Demonstration
 
-<video controls width="100%" src="docs/0410.mp4">
-Your browser does not support the video tag.
-</video>
+See TangierTimes in action in our full project walkthrough:
+
+[![TangierTimes Video Demo](https://img.youtube.com/vi/NiLSas0s970/0.jpg)](https://youtu.be/NiLSas0s970)
+
+*(Click the image above to watch the video demo)*
 
 ---
 
@@ -156,7 +158,11 @@ python main.py
 
 ---
 
+<<<<<<< HEAD
+
+=======
 <div align="center">
   <p>Built for Tangier, Morocco.</p>
   <p><b>© 2026 TangierTimes Team</b></p>
 </div>
+>>>>>>> 15d171b (docs: professionalize README, remove emojis, and add project features walkthrough video)
