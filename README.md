@@ -17,11 +17,9 @@
 
 ## Video Demonstration
 
-See TangierTimes in action in our full project walkthrough:
-
-[![TangierTimes Video Demo](https://img.youtube.com/vi/NiLSas0s970/0.jpg)](https://youtu.be/NiLSas0s970)
-
-*(Click the image above to watch the video demo)*
+<video controls width="100%" src="docs/0410.mp4">
+Your browser does not support the video tag.
+</video>
 
 ---
 
