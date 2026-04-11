@@ -39,13 +39,7 @@ TangierTimes is a sophisticated, AI-driven news platform that automates the enti
 - **Media Management:** Automatically downloads cover images and uploads them to ImageKit.io for fast global CDN delivery.
 - **Seamless Database Persistence:** Processed articles are securely injected directly into the central MySQL database.
 
-### Modern Mobile-First Frontend (React + Tailwind)
-- **Premium Aesthetic:** A "New York Times" inspired, sleek, mobile-friendly design.
-- **Bottom Navigation Bar:** Native app-like experience for smooth traversal on mobile devices.
-- **High-Performance Pagination:** "Load More" functionality integrated with elegant Skeleton Loaders for uninterrupted scrolling.
-- **Live Local Weather:** Real-time Tangier weather widget via the Open-Meteo API.
-- **Instant Search:** Dynamic, blazing-fast real-time search with instant dropdown suggestions.
-- **Content Discovery:** Automatic "Related Articles" suggestions and category-based filtering.
+
 
 ### Security, User Accounts and Interaction (Laravel Backend)
 - **Multi-Channel Authentication:** Secure registration and login protected by Google reCAPTCHA, plus Social Login support (OAuth).
