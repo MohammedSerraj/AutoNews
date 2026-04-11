@@ -160,9 +160,3 @@ python main.py
 
 <<<<<<< HEAD
 
-=======
-<div align="center">
-  <p>Built for Tangier, Morocco.</p>
-  <p><b>© 2026 TangierTimes Team</b></p>
-</div>
->>>>>>> 15d171b (docs: professionalize README, remove emojis, and add project features walkthrough video)
