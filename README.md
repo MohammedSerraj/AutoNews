@@ -34,7 +34,7 @@ TangierTimes is a sophisticated, AI-driven news platform that automates the enti
 ## Comprehensive Feature List
 
 ### Automation and AI Pipeline (Python)
-- **Automated Web Scraping:** Runs a 24-hour recurring cycle to monitor and scrape Arabic/French news platforms.
+- **Automated Web Scraping:** Runs a 24-hour recurring cycle to monitor and scrape https://tanjanews.com/news-sitemap.xml.
 - **AI-Powered Translations:** Seamlessly translates headlines and full article content into English using the Google Gemini API.
 - **Media Management:** Automatically downloads cover images and uploads them to ImageKit.io for fast global CDN delivery.
 - **Seamless Database Persistence:** Processed articles are securely injected directly into the central MySQL database.
